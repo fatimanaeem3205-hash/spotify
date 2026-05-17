@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { mockSongs } from "./MockSongs";
-import { setTrack, setQueue } from "./PlayerSlice";
+import React, { useState, useContext } from "react";
+import { mockSongs } from "../data/songs";
+import { PlayerContext } from "../context/PlayerContext";
 
 const Search = () => {
-  const dispatch = useDispatch();
+  const { selectAndPlayTrack } = useContext(PlayerContext);
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredSongs = mockSongs.filter(
     (song) =>
       song.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      song.artist.toLowerCase().includes(searchQuery.toLowerCase()),
+      song.artist.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -32,18 +31,11 @@ const Search = () => {
             {filteredSongs.map((track) => (
               <div
                 key={track.id}
-                onClick={() => {
-                  dispatch(setTrack(track));
-                  dispatch(setQueue(filteredSongs));
-                }}
+                onClick={() => selectAndPlayTrack(track, filteredSongs)}
                 className="flex items-center justify-between p-3 rounded hover:bg-zinc-800/50 cursor-pointer group transition"
               >
                 <div className="flex items-center gap-3">
-                  <img
-                    src={track.cover}
-                    alt="Cover"
-                    className="w-10 h-10 object-cover rounded"
-                  />
+                  <img src={track.cover} alt="Cover" className="w-10 h-10 object-cover rounded" />
                   <div>
                     <p className="text-sm font-medium text-white group-hover:text-[#ff2a74]">
                       {track.title}
@@ -60,17 +52,15 @@ const Search = () => {
         <section>
           <h2 className="text-lg font-bold mb-4">Browse Genres</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            {["CyberPunk Electro", "Neon Lo-Fi", "Vaporwave Chill"].map(
-              (genre, idx) => (
-                <div
-                  key={idx}
-                  className="h-28 bg-zinc-900 border border-zinc-800 rounded-lg p-4 font-bold relative overflow-hidden cursor-pointer hover:border-pink-500/20 transition"
-                >
-                  <span>{genre}</span>
-                  <div className="w-12 h-12 bg-[#ff2a74]/10 absolute -right-2 -bottom-2 rounded-full blur-lg" />
-                </div>
-              ),
-            )}
+            {["CyberPunk Electro", "Neon Lo-Fi", "Vaporwave Chill"].map((genre, idx) => (
+              <div
+                key={idx}
+                className="h-28 bg-zinc-900 border border-zinc-800 rounded-lg p-4 font-bold relative overflow-hidden cursor-pointer hover:border-pink-500/20 transition"
+              >
+                <span>{genre}</span>
+                <div className="w-12 h-12 bg-[#ff2a74]/10 absolute -right-2 -bottom-2 rounded-full blur-lg" />
+              </div>
+            ))}
           </div>
         </section>
       )}

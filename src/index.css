@@ -2,13 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ============================================================
-   globals.css — Pink Spotify Clone Design System
-   ============================================================ */
-
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
 
-/* ── CSS Variables ───────────────────────────────────────── */
 :root {
   --pink: #FF2D6B;
   --pink-hover: #FF5588;
@@ -84,7 +79,6 @@ img {
   display: block;
 }
 
-/* ── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -103,12 +97,10 @@ img {
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* ── Typography ──────────────────────────────────────────── */
 .font-display {
   font-family: 'Playfair Display', Georgia, serif;
 }
 
-/* ── Animations ──────────────────────────────────────────── */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -303,7 +295,6 @@ img {
   transform: scale(1.02);
 }
 
-/* ── Card hover lift ─────────────────────────────────────── */
 .card-hover {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -313,13 +304,11 @@ img {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* ── Pink glow ring on focus ─────────────────────────────── */
 .focus-pink:focus {
   outline: 2px solid var(--pink);
   outline-offset: 2px;
 }
 
-/* ── Gradient text ───────────────────────────────────────── */
 .text-gradient-pink {
   background: linear-gradient(135deg, var(--pink), #FF8FAB);
   -webkit-background-clip: text;
@@ -327,7 +316,6 @@ img {
   background-clip: text;
 }
 
-/* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 768px) {
   :root {
     --sidebar-w: 0px;
