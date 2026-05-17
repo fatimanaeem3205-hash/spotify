@@ -13,14 +13,14 @@ const Home = () => {
           Welcome Back
         </h1>
         <p className="text-zinc-400 text-xs max-w-sm">
-          Experience high fidelity tracking pipelines built with our custom Spotify Pink layout structures.
+          Experience Musics with Pink Shopify.
         </p>
       </section>
 
       {/* Grid interface displaying available local tracks */}
       <section>
         <h2 className="text-lg font-bold mb-4 tracking-tight border-b border-zinc-800 pb-2 text-zinc-100">
-          Trending Local Feeds
+          Trending Feeds
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {mockSongs.map((track) => (

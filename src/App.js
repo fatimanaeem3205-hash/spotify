@@ -8,8 +8,6 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 function App() {
-  // Beginner-friendly user authentication state handled directly at the core layout tier.
-  // This layout makes it easy to explain session persistence without complex code.
   const [user, setUser] = useState(() => {
     const cachedUser = localStorage.getItem("fakeUser");
     return cachedUser ? JSON.parse(cachedUser) : null;
@@ -27,12 +25,10 @@ function App() {
     localStorage.removeItem("fakeUser");
   };
 
-  // Protected Route component checks local state for authentication
   const ProtectedRoute = ({ children }) => {
     if (!user) {
       return <Navigate to="/login" replace />;
     }
-    // Explicitly pass down user and logout handlers to the layout structural frame via standard props
     return <MainLayout user={user} onLogout={handleLogout}>{children}</MainLayout>;
   };
 

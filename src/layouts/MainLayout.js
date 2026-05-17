@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import AudioPlayer from "../components/AudioPlayer";
 import defaultAvatar from "../assets/img.png";
 
-// MainLayout uses properties passed down from App.js.
-// Props are perfect here because this layout only needs access to data for display.
 const MainLayout = ({ children, user, onLogout }) => {
   const navigate = useNavigate();
 
@@ -40,7 +38,7 @@ const MainLayout = ({ children, user, onLogout }) => {
         {/* Primary View Port Frame */}
         <main className="flex-1 flex flex-col bg-[#121214] rounded-lg overflow-y-auto relative h-full">
           <header className="h-14 border-b border-zinc-900/60 px-6 flex items-center justify-between sticky top-0 bg-[#121214]/90 backdrop-blur-md z-30">
-            <div className="text-xs text-zinc-400 font-medium">Instance Connected Node Session</div>
+            <div className="text-xs text-zinc-400 font-medium">User Connected</div>
             <div className="flex items-center gap-3">
               <span className="text-xs text-zinc-300 font-bold">
                 {user?.username || "Guest Listener"}
