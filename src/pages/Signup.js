@@ -1,14 +1,9 @@
+// src/pages/Signup.jsx
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { signupSuccess } from "./AuthSlice";
 
-// Import your local asset file here as well
-
-const Signup = () => {
-  const dispatch = useDispatch();
+const Signup = ({ onSignupSuccess }) => {
   const navigate = useNavigate();
-
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,13 +27,8 @@ const Signup = () => {
       return;
     }
 
-    const fakeUserPayload = {
-      email,
-      username: username || email.split("@")[0],
-      // Assign the local image
-    };
-
-    dispatch(signupSuccess(fakeUserPayload));
+    const fakeUserPayload = { email, username: username || email.split("@")[0] };
+    onSignupSuccess(fakeUserPayload);
     navigate("/");
   };
 
@@ -49,9 +39,7 @@ const Signup = () => {
           <div className="text-2xl font-black tracking-tighter text-white">
             SPOTIFY<span className="text-[#ff2a74]">PINK</span>
           </div>
-          <h2 className="text-xl font-bold text-zinc-100">
-            Sign up for free to start listening.
-          </h2>
+          <h2 className="text-xl font-bold text-zinc-100">Sign up for free to start listening.</h2>
         </div>
 
         {clientError && (
@@ -62,9 +50,7 @@ const Signup = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold uppercase text-zinc-400 mb-1.5">
-              What should we call you?
-            </label>
+            <label className="block text-xs font-bold uppercase text-zinc-400 mb-1.5">Username</label>
             <input
               type="text"
               placeholder="Enter a profile name."
@@ -76,9 +62,7 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase text-zinc-400 mb-1.5">
-              What is your email?
-            </label>
+            <label className="block text-xs font-bold uppercase text-zinc-400 mb-1.5">Email</label>
             <input
               type="email"
               placeholder="name@domain.com"
@@ -90,9 +74,7 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase text-zinc-400 mb-1.5">
-              Create a password
-            </label>
+            <label className="block text-xs font-bold uppercase text-zinc-400 mb-1.5">Create a password</label>
             <input
               type="password"
               placeholder="Minimum 5 characters"
@@ -104,9 +86,7 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase text-zinc-400 mb-1.5">
-              Confirm your password
-            </label>
+            <label className="block text-xs font-bold uppercase text-zinc-400 mb-1.5">Confirm your password</label>
             <input
               type="password"
               placeholder="Enter password again"
@@ -117,10 +97,7 @@ const Signup = () => {
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full py-3 bg-[#ff2a74] hover:bg-pink-700 text-white font-bold text-sm rounded-full tracking-wide shadow-md transform active:scale-95 transition mt-2"
-          >
+          <button type="submit" className="w-full py-3 bg-[#ff2a74] hover:bg-pink-700 text-white font-bold text-sm rounded-full tracking-wide shadow-md transform active:scale-95 transition mt-2">
             Sign Up
           </button>
         </form>
@@ -128,10 +105,7 @@ const Signup = () => {
         <div className="border-t border-zinc-800/80 pt-4 text-center">
           <p className="text-xs text-zinc-400">
             Already have an account?{" "}
-            <span
-              onClick={() => navigate("/login")}
-              className="text-[#ff2a74] hover:underline cursor-pointer font-semibold"
-            >
+            <span onClick={() => navigate("/login")} className="text-[#ff2a74] hover:underline cursor-pointer font-semibold">
               Log in here
             </span>
           </p>

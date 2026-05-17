@@ -1,3 +1,4 @@
+// Unified track registry for the music playing system
 export const mockSongs = [
   {
     id: 1,
@@ -5,9 +6,8 @@ export const mockSongs = [
     artist: "SynthWave Pulse",
     album: "Cyber Resonance",
     duration: "2:41",
-    cover:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60",
-    src: "/music/track1.mp3", // Points to public/music/track1.mp3
+    cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60",
+    src: "/music/track1.mp3",
   },
   {
     id: 2,
@@ -15,8 +15,7 @@ export const mockSongs = [
     artist: "Retro Shifter",
     album: "Outrun Legend",
     duration: "3:15",
-    cover:
-      "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=500&auto=format&fit=crop&q=60",
+    cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=500&auto=format&fit=crop&q=60",
     src: "/music/track2.mp3",
   },
   {
@@ -25,8 +24,7 @@ export const mockSongs = [
     artist: "Vapor Chill",
     album: "Aesthetic Era",
     duration: "2:58",
-    cover:
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&auto=format&fit=crop&q=60",
+    cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&auto=format&fit=crop&q=60",
     src: "/music/track3.mp3",
   },
 ];

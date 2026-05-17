@@ -1,15 +1,10 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { mockSongs } from "./MockSongs";
-import { setTrack, setQueue } from "./PlayerSlice";
+import React, { useContext } from "react";
+import { mockSongs } from "../data/songs";
+import { PlayerContext } from "../context/PlayerContext";
 
 const Home = () => {
-  const dispatch = useDispatch();
-
-  const handlePlayTrack = (track) => {
-    dispatch(setTrack(track));
-    dispatch(setQueue(mockSongs));
-  };
+  // Pull track allocation methods directly from our global music player context tree
+  const { selectAndPlayTrack } = useContext(PlayerContext);
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -18,11 +13,11 @@ const Home = () => {
           Welcome Back
         </h1>
         <p className="text-zinc-400 text-xs max-w-sm">
-          Experience high fidelity tracking pipelines built with our custom
-          Spotify Pink layout structures.
+          Experience high fidelity tracking pipelines built with our custom Spotify Pink layout structures.
         </p>
       </section>
 
+      {/* Grid interface displaying available local tracks */}
       <section>
         <h2 className="text-lg font-bold mb-4 tracking-tight border-b border-zinc-800 pb-2 text-zinc-100">
           Trending Local Feeds
@@ -31,27 +26,19 @@ const Home = () => {
           {mockSongs.map((track) => (
             <div
               key={track.id}
-              onClick={() => handlePlayTrack(track)}
+              onClick={() => selectAndPlayTrack(track, mockSongs)}
               className="bg-[#18181c] p-4 rounded-lg hover:bg-zinc-800/40 transition duration-300 group cursor-pointer border border-transparent hover:border-pink-500/10 relative"
             >
               <div className="relative mb-3 shadow-md aspect-square rounded-md overflow-hidden">
-                <img
-                  src={track.cover}
-                  alt={track.title}
-                  className="w-full h-full object-cover"
-                />
+                <img src={track.cover} alt={track.title} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                   <div className="w-11 h-11 bg-[#ff2a74] rounded-full flex items-center justify-center text-black font-bold shadow-xl transform translate-y-2 group-hover:translate-y-0 transition duration-300 hover:scale-105 active:scale-95">
                     ▶
                   </div>
                 </div>
               </div>
-              <h3 className="font-semibold text-sm truncate text-zinc-200">
-                {track.title}
-              </h3>
-              <p className="text-xs text-zinc-400 truncate mt-1">
-                {track.artist}
-              </p>
+              <h3 className="font-semibold text-sm truncate text-zinc-200">{track.title}</h3>
+              <p className="text-xs text-zinc-400 truncate mt-1">{track.artist}</p>
             </div>
           ))}
         </div>

@@ -1,23 +1,25 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useAudio } from "./UseAudio";
-import {
-  setPlayingState,
-  playNextTrack,
-  playPreviousTrack,
-  toggleShuffle,
-  toggleRepeat,
-  setVolumeLevel,
-} from "./PlayerSlice";
+import React, { useContext } from "react";
+import { PlayerContext } from "../context/PlayerContext";
 
+// AudioPlayer accesses the PlayerContext provider tree to sync playback view states
 const AudioPlayer = () => {
-  const dispatch = useDispatch();
-  const { currentTrack, isPlaying, volume, isShuffle, isRepeat } = useSelector(
-    (state) => state.player,
-  );
-  const { duration, seek, handleSeekChange } = useAudio();
+  const {
+    currentTrack,
+    isPlaying,
+    volume,
+    isShuffle,
+    isRepeat,
+    duration,
+    seek,
+    setVolume,
+    toggleShuffle,
+    toggleRepeat,
+    togglePlayPause,
+    playNextTrack,
+    playPreviousTrack,
+    handleSeekChange,
+  } = useContext(PlayerContext);
 
-  // Pure client side helper to convert raw seconds to MM:SS display format
   const formatTime = (secs) => {
     if (isNaN(secs)) return "0:00";
     const minutes = Math.floor(secs / 60);
@@ -35,7 +37,8 @@ const AudioPlayer = () => {
 
   return (
     <div className="w-full grid grid-cols-2 md:grid-cols-3 items-center justify-between px-4 h-full">
-      {/* Track Metadata Card Panel */}
+      
+      {/* Meta Info Display Panel */}
       <div className="flex items-center gap-3 min-w-0">
         <img
           src={currentTrack.cover}
@@ -52,46 +55,40 @@ const AudioPlayer = () => {
         </div>
       </div>
 
-      {/* Media Engine Processing Interfaces */}
+      {/* Central Control Hub Matrix */}
       <div className="flex flex-col items-center gap-2 w-full justify-end md:justify-center">
         <div className="flex items-center gap-5">
           <button
-            onClick={() => dispatch(toggleShuffle())}
+            onClick={toggleShuffle}
             className={`transition ${isShuffle ? "text-[#ff2a74] drop-shadow-[0_0_8px_#ff2a74]" : "text-zinc-400 hover:text-white"}`}
           >
             🔀
           </button>
 
-          <button
-            onClick={() => dispatch(playPreviousTrack())}
-            className="text-zinc-400 hover:text-white transition text-lg"
-          >
+          <button onClick={playPreviousTrack} className="text-zinc-400 hover:text-white transition text-lg">
             ⏮
           </button>
 
           <button
-            onClick={() => dispatch(setPlayingState(!isPlaying))}
+            onClick={togglePlayPause}
             className="bg-white text-black p-2 rounded-full hover:scale-105 transition shadow-lg active:scale-95 flex items-center justify-center w-9 h-9"
           >
             {isPlaying ? "⏸" : "▶"}
           </button>
 
-          <button
-            onClick={() => dispatch(playNextTrack())}
-            className="text-zinc-400 hover:text-white transition text-lg"
-          >
+          <button onClick={playNextTrack} className="text-zinc-400 hover:text-white transition text-lg">
             ⏭
           </button>
 
           <button
-            onClick={() => dispatch(toggleRepeat())}
+            onClick={toggleRepeat}
             className={`transition ${isRepeat ? "text-[#ff2a74] drop-shadow-[0_0_8px_#ff2a74]" : "text-zinc-400 hover:text-white"}`}
           >
             {isRepeat === "one" ? "🔂 1" : "🔁"}
           </button>
         </div>
 
-        {/* Runtime Progressive Range Bar Scrubber */}
+        {/* Progress Range Slider */}
         <div className="hidden md:flex items-center gap-2 w-full max-w-md text-xs text-zinc-400">
           <span>{formatTime(seek)}</span>
           <input
@@ -106,7 +103,7 @@ const AudioPlayer = () => {
         </div>
       </div>
 
-      {/* System Node Volume Management */}
+      {/* Master Volume Management Slider */}
       <div className="hidden md:flex items-center justify-end gap-2">
         <span className="text-xs text-zinc-400">🔊</span>
         <input
@@ -115,7 +112,7 @@ const AudioPlayer = () => {
           max="1"
           step="0.01"
           value={volume}
-          onChange={(e) => dispatch(setVolumeLevel(parseFloat(e.target.value)))}
+          onChange={(e) => setVolume(parseFloat(e.target.value))}
           className="w-24 h-1 accent-[#ff2a74] bg-zinc-700 rounded-lg appearance-none cursor-pointer"
         />
       </div>
