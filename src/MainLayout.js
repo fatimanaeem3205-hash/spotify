@@ -13,11 +13,11 @@ const MainLayout = ({ children }) => {
   const { user } = useSelector((state) => state.auth);
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-[#09090b] text-white overflow-hidden select-none">
+    <div className="h-screen w-screen flex flex-col bg-[#09090b] text-[#ff2a74] overflow-hidden select-none">
       <div className="flex flex-1 h-[calc(100vh-90px)] w-full p-2 gap-2 overflow-hidden">
         <aside className="hidden md:flex flex-col w-64 h-full bg-[#121214] rounded-lg p-4 space-y-6 shrink-0">
           <div className="text-xl font-black tracking-tighter px-2">
-            SPOTIFY<span className="text-[#ff2a74]">PINK</span>
+            SPOTIFY
           </div>
 
           <nav className="flex flex-col space-y-3 font-semibold text-sm text-zinc-400">
