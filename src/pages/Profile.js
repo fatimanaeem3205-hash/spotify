@@ -3,15 +3,12 @@ import defaultAvatar from "../assets/img.png";
 import { fallbackUser } from "../data/users";
 
 const Profile = ({ user }) => {
-  // Local state to toggle the creator panel visibility
   const [isCreator, setIsCreator] = useState(false);
   
-  // Track which active view to display inside the panel ("menu", "add", "delete", "view")
   const [activeTab, setActiveTab] = useState("menu");
 
   return (
     <div className="space-y-6 animate-scale-in">
-      {/* Profile Info Header Panel */}
       <section 
         className="flex flex-col md:flex-row items-center gap-6 p-6 border shadow-lg"
         style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", borderRadius: "var(--radius-lg)" }}
@@ -28,7 +25,7 @@ const Profile = ({ user }) => {
             className="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full text-white"
             style={{ background: "var(--pink-dark)" }}
           >
-            {fallbackUser.tier}
+            Listen songs with Spotify
           </span>
           <h1 className="text-3xl font-bold font-display tracking-tight text-white">
             {user?.username || fallbackUser.username}
@@ -38,12 +35,11 @@ const Profile = ({ user }) => {
           </p>
         </div>
 
-        {/* Action Button Matrix */}
         <div className="shrink-0 mt-4 md:mt-0">
           <button 
             onClick={() => {
               setIsCreator(!isCreator);
-              setActiveTab("menu"); // Reset view when toggled
+              setActiveTab("menu");
             }} 
             className={isCreator ? "btn-outline" : "btn-pink"}
           >
@@ -52,7 +48,6 @@ const Profile = ({ user }) => {
         </div>
       </section>
 
-      {/* Conditional Creator Sub-Dashboard Workspace */}
       {isCreator && (
         <section 
           className="p-6 border animate-slide-up space-y-4"
@@ -75,10 +70,8 @@ const Profile = ({ user }) => {
             )}
           </div>
 
-          {/* Core Navigation Grid */}
           {activeTab === "menu" && (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-medium text-sm">
-              {/* Action Item 1: Add Music */}
               <button 
                 onClick={() => setActiveTab("add")}
                 className="p-4 rounded-md text-left transition card-hover flex items-center justify-between border"
@@ -88,7 +81,6 @@ const Profile = ({ user }) => {
                 <span style={{ color: "var(--pink)" }}>→</span>
               </button>
 
-              {/* Action Item 2: Delete Music */}
               <button 
                 onClick={() => setActiveTab("delete")}
                 className="p-4 rounded-md text-left transition card-hover flex items-center justify-between border"
@@ -98,7 +90,6 @@ const Profile = ({ user }) => {
                 <span className="text-red-400">→</span>
               </button>
 
-              {/* Action Item 3: Your Tracks Registry */}
               <button 
                 onClick={() => setActiveTab("view")}
                 className="p-4 rounded-md text-left transition card-hover flex items-center justify-between border"
@@ -110,7 +101,6 @@ const Profile = ({ user }) => {
             </div>
           )}
 
-          {/* Inner Workspaces (Ready for form layouts/lists later) */}
           {activeTab === "add" && (
             <div className="p-4 border border-dashed border-zinc-800 text-center text-xs text-zinc-500 rounded animate-fade-in">
               Add Music form node goes here.

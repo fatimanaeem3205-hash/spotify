@@ -1,4 +1,3 @@
-// Unified track registry for the music playing system
 export const mockSongs = [
   {
     id: 1,

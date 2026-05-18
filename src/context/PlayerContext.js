@@ -1,7 +1,5 @@
 import React, { createContext, useState, useEffect, useRef } from "react";
 
-// Context API is chosen specifically for the media controller because it acts as a global singleton.
-// This prevents music from cutting out or re-initializing when the user navigates between pages.
 export const PlayerContext = createContext();
 
 export const PlayerProvider = ({ children }) => {
@@ -15,10 +13,8 @@ export const PlayerProvider = ({ children }) => {
   const [duration, setDuration] = useState(0);
   const [seek, setSeek] = useState(0);
 
-  // useRef references the native browser HTMLAudioElement across renders without trigger loops
   const audioRef = useRef(new Audio());
 
-  // Handle Playback State synchronization with the audio object
   useEffect(() => {
     if (!currentTrack) return;
 
@@ -29,7 +25,6 @@ export const PlayerProvider = ({ children }) => {
     }
   }, [isPlaying, currentTrack]);
 
-  // Handle Track Changes
   useEffect(() => {
     if (currentTrack && currentTrack.src) {
       audioRef.current.src = currentTrack.src;
@@ -42,7 +37,6 @@ export const PlayerProvider = ({ children }) => {
     }
   }, [currentTrack]);
 
-  // Track Runtime State Listeners (Time Updates & Track Ending)
   useEffect(() => {
     const audio = audioRef.current;
 
@@ -61,12 +55,10 @@ export const PlayerProvider = ({ children }) => {
     };
   }, [currentIndex, queue, isRepeat, isShuffle]);
 
-  // Update System Volume
   useEffect(() => {
     audioRef.current.volume = volume;
   }, [volume]);
 
-  // Global Context Media Action Controllers
   const selectAndPlayTrack = (track, targetQueue) => {
     setQueue(targetQueue);
     const index = targetQueue.findIndex((t) => t.id === track.id);

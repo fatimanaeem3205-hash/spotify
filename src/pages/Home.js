@@ -3,7 +3,6 @@ import { mockSongs } from "../data/songs";
 import { PlayerContext } from "../context/PlayerContext";
 
 const Home = () => {
-  // Pull track allocation methods directly from our global music player context tree
   const { selectAndPlayTrack } = useContext(PlayerContext);
 
   return (
@@ -17,9 +16,8 @@ const Home = () => {
         </p>
       </section>
 
-      {/* Grid interface displaying available local tracks */}
       <section>
-        <h2 className="text-lg font-bold mb-4 tracking-tight border-b border-zinc-800 pb-2 text-zinc-100">
+        <h2 className="text-lg font-bold mb-4 tracking-tighter border-b border-zinc-800 pb-2 text-zinc-100">
           Trending Feeds
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -34,11 +32,11 @@ const Home = () => {
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                   <div className="w-11 h-11 bg-[#ff2a74] rounded-full flex items-center justify-center text-black font-bold shadow-xl transform translate-y-2 group-hover:translate-y-0 transition duration-300 hover:scale-105 active:scale-95">
                     ▶
-                  </div>
+                  </div>-
                 </div>
               </div>
-              <h3 className="font-semibold text-sm truncate text-zinc-200">{track.title}</h3>
-              <p className="text-xs text-zinc-400 truncate mt-1">{track.artist}</p>
+              <h3 className="font-semibold text-sm text-zinc-200">{track.title}</h3>
+              <p className="text-xs text-zinc-400 mt-1">{track.artist}</p>
             </div>
           ))}
         </div>

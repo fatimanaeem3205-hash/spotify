@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { PlayerContext } from "../context/PlayerContext";
 
-// AudioPlayer accesses the PlayerContext provider tree to sync playback view states
 const AudioPlayer = () => {
   const {
     currentTrack,
@@ -30,7 +29,7 @@ const AudioPlayer = () => {
   if (!currentTrack) {
     return (
       <div className="w-full flex items-center justify-center text-zinc-500 text-sm italic h-full">
-        Select a track to initialize the Pink Audio System player panel.
+        Select a track to initialize the Audio System player panel.
       </div>
     );
   }
@@ -38,7 +37,6 @@ const AudioPlayer = () => {
   return (
     <div className="w-full grid grid-cols-2 md:grid-cols-3 items-center justify-between px-4 h-full">
       
-      {/* Meta Info Display Panel */}
       <div className="flex items-center gap-3 min-w-0">
         <img
           src={currentTrack.cover}
@@ -55,7 +53,6 @@ const AudioPlayer = () => {
         </div>
       </div>
 
-      {/* Central Control Hub Matrix */}
       <div className="flex flex-col items-center gap-2 w-full justify-end md:justify-center">
         <div className="flex items-center gap-5">
           <button
@@ -88,7 +85,6 @@ const AudioPlayer = () => {
           </button>
         </div>
 
-        {/* Progress Range Slider */}
         <div className="hidden md:flex items-center gap-2 w-full max-w-md text-xs text-zinc-400">
           <span>{formatTime(seek)}</span>
           <input
@@ -103,7 +99,6 @@ const AudioPlayer = () => {
         </div>
       </div>
 
-      {/* Master Volume Management Slider */}
       <div className="hidden md:flex items-center justify-end gap-2">
         <span className="text-xs text-zinc-400">🔊</span>
         <input

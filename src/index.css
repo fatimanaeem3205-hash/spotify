@@ -33,8 +33,6 @@
   --transition: all 0.2s ease;
   --transition-slow: all 0.4s ease;
 }
-
-/* ── Reset ───────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -54,7 +52,6 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
-  /* Prevent body scroll — sections scroll internally */
 }
 
 a {
@@ -186,8 +183,6 @@ img {
     opacity: 0.7;
   }
 }
-
-/* ── Utility Classes ─────────────────────────────────────── */
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;
 }
@@ -208,7 +203,6 @@ img {
   animation: pulseGlow 2s ease-in-out infinite;
 }
 
-/* Staggered children */
 .stagger-children>* {
   animation: slideUp 0.4s ease-out both;
 }
@@ -237,7 +231,6 @@ img {
   animation-delay: 0.30s;
 }
 
-/* ── Skeleton Shimmer ────────────────────────────────────── */
 .skeleton {
   background: linear-gradient(90deg,
       var(--surface) 25%,
@@ -248,7 +241,6 @@ img {
   border-radius: var(--radius-sm);
 }
 
-/* ── Glass Effect ────────────────────────────────────────── */
 .glass {
   background: rgba(26, 26, 26, 0.85);
   backdrop-filter: blur(20px);
@@ -256,7 +248,6 @@ img {
   border: 1px solid var(--border);
 }
 
-/* ── Pink Button ─────────────────────────────────────────── */
 .btn-pink {
   background: var(--pink);
   color: #fff;

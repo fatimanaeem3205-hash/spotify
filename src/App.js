@@ -35,11 +35,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Views */}
         <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
         <Route path="/signup" element={<Signup onSignupSuccess={handleLoginSuccess} />} />
 
-        {/* Guarded Application Views */}
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/search" element={<ProtectedRoute><Search /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile user={user} /></ProtectedRoute>} />

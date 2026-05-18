@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -30,8 +29,8 @@ const Login = ({ onLoginSuccess }) => {
     <div className="w-screen h-screen flex flex-col items-center justify-center bg-[#09090b] text-white px-4">
       <div className="w-full max-w-md bg-[#121214] border border-zinc-900 p-8 rounded-xl shadow-2xl space-y-6">
         <div className="text-center space-y-2">
-          <div className="text-2xl font-black tracking-tighter text-white">
-            SPOTIFY<span className="text-[#ff2a74]">PINK</span>
+          <div className="text-2xl font-black tracking-tighter text-[#ff2a74]">
+            SPOTIFY
           </div>
           <p className="text-xs text-zinc-400">Log in</p>
         </div>
