@@ -1,50 +1,30 @@
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout";
-import Home from "./pages/Home";
-import Search from "./pages/Search";
-import Profile from "./pages/Profile";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Cars from './pages/Cars';
+import CarDetails from './pages/CarDetails';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 function App() {
-  const [user, setUser] = useState(() => {
-    const cachedUser = localStorage.getItem("fakeUser");
-    return cachedUser ? JSON.parse(cachedUser) : null;
-  });
-
-  const handleLoginSuccess = (userPayload) => {
-    setUser(userPayload);
-    localStorage.setItem("fakeToken", "mock-jwt-token-string");
-    localStorage.setItem("fakeUser", JSON.stringify(userPayload));
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem("fakeToken");
-    localStorage.removeItem("fakeUser");
-  };
-
-  const ProtectedRoute = ({ children }) => {
-    if (!user) {
-      return <Navigate to="/login" replace />;
-    }
-    return <MainLayout user={user} onLogout={handleLogout}>{children}</MainLayout>;
-  };
-
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-        <Route path="/signup" element={<Signup onSignupSuccess={handleLoginSuccess} />} />
-
-        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path="/search" element={<ProtectedRoute><Search /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile user={user} /></ProtectedRoute>} />
-
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <Router>
+      <div className="bg-brandLight min-h-screen text-brandDark flex flex-col justify-between font-sans">
+        <Navbar />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cars" element={<Cars />} />
+            <Route path="/car/:id" element={<CarDetails />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
