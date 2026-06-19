@@ -7,8 +7,8 @@ import axios from 'axios';
 
 export default function Home({ user }) {
   useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+    window.scrollTo(0, 0);
+  }, []);
 
   const navigate = useNavigate();
   const [cars, setCars] = useState([]);
@@ -18,10 +18,10 @@ export default function Home({ user }) {
   const [activeCategory, setActiveCategory] = useState("All");
 
   const fallbackCars = [
-    { _id: 'mock1', brand: 'Toyota', name: 'Supra MK5', color: 'Matte Black', numberPlate: 'S-777', status: 'available', pricePerDay: 65000, image: 'https://images.unsplash.com/photo-1617469767053-d3b508a0d822?auto=format&fit=crop&w=500&q=80', category: 'Business' },
-    { _id: 'mock2', brand: 'Audi', name: 'RS6 Avant', color: 'Nardo Grey', numberPlate: 'A-990', status: 'available', pricePerDay: 55000, image: 'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?auto=format&fit=crop&w=500&q=80', category: 'Family' },
-    { _id: 'mock3', brand: 'Land Rover', name: 'Defender 110', color: 'Sand Dune', numberPlate: 'D-110', status: 'available', pricePerDay: 48000, image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=500&q=80', category: 'Adventure' },
-    { _id: 'mock4', brand: 'Mercedes', name: 'S-Class Maybach', color: 'Obsidian Black', numberPlate: 'M-100', status: 'appointed', pricePerDay: 75000, image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=500&q=80', category: 'Wedding' }
+    { _id: 'mock1', brand: 'Toyota', name: 'Supra MK5', color: 'Matte Black', numberPlate: 'S-777', status: 'available', pricePerHour: 2500, image: 'https://images.unsplash.com/photo-1617469767053-d3b508a0d822?auto=format&fit=crop&w=500&q=80', category: 'business' },
+    { _id: 'mock2', brand: 'Audi', name: 'RS6 Avant', color: 'Nardo Grey', numberPlate: 'A-990', status: 'available', pricePerHour: 2200, image: 'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?auto=format&fit=crop&w=500&q=80', category: 'family' },
+    { _id: 'mock3', brand: 'Land Rover', name: 'Defender 110', color: 'Sand Dune', numberPlate: 'D-110', status: 'available', pricePerHour: 1800, image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=500&q=80', category: 'adventure' },
+    { _id: 'mock4', brand: 'Mercedes', name: 'S-Class Maybach', color: 'Obsidian Black', numberPlate: 'M-100', status: 'appointed', pricePerHour: 3500, image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=500&q=80', category: 'wedding' }
   ];
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function Home({ user }) {
   const executeBooking = async (e) => {
     e.preventDefault();
     if (selectedCar._id.startsWith('mock')) {
-      alert(`Simulation Mode: Successfully reserved ${selectedCar.brand} ${selectedCar.name} at ₨ ${selectedCar.pricePerDay.toLocaleString()}/day!`);
+      alert(`Simulation Mode: Successfully reserved ${selectedCar.brand} ${selectedCar.name} at ₨ ${(selectedCar.pricePerHour || 0).toLocaleString()}/hour!`);
       setSelectedCar(null);
       return;
     }
@@ -83,7 +83,11 @@ export default function Home({ user }) {
 
   const filteredCars = activeCategory === "All" 
     ? cars 
-    : cars.filter(car => car.category === activeCategory || car.brand === activeCategory);
+    : cars.filter(car => {
+        const carCat = (car.category || "").toLowerCase();
+        const activeCat = activeCategory.toLowerCase();
+        return carCat === activeCat || car.brand?.toLowerCase() === activeCat;
+      });
 
   return (
     <div className="bg-white text-neutral-900 overflow-x-hidden antialiased font-sans">
@@ -200,8 +204,8 @@ export default function Home({ user }) {
                   </div>
                   <div className="pt-3 border-t border-dashed flex items-center justify-between gap-4">
                     <div>
-                      <span className="text-base font-bold text-neutral-900">₨ {Number(car.pricePerDay || 45000).toLocaleString()}</span>
-                      <span className="text-xs text-gray-400 block font-medium">/ Day</span>
+                      <span className="text-base font-bold text-neutral-900">₨ {Number(car.pricePerHour || 1500).toLocaleString()}</span>
+                      <span className="text-xs text-gray-400 block font-medium">/ Hour</span>
                     </div>
                     <button 
                       disabled={car.status === 'appointed'}
@@ -218,13 +222,11 @@ export default function Home({ user }) {
         )}
       </section>
 
-      {/* 4. SPLIT PROCESS LAYER WITH REFRESHED BACKGROUND GRAPHIC */}
       <section className="bg-neutral-900 text-white grid grid-cols-1 md:grid-cols-2 overflow-hidden min-h-[500px]">
         <div className="relative bg-cover bg-center min-h-[350px] md:min-h-full group" 
              style={{ backgroundImage: `url(${homeimg})` }}>
           <div className="absolute inset-0 bg-neutral-950/20 group-hover:bg-transparent transition-colors duration-500"></div>
         </div>
-        {/* Changed background style to display image_299a66.jpg cleanly using an elegant gradient mask layer */}
         <div className="relative p-12 md:p-20 flex flex-col justify-center bg-cover bg-center text-white"
              style={{ backgroundImage: `linear-gradient(rgba(10, 10, 10, 0.92), rgba(10, 10, 10, 0.95)), url('image_299a66.jpg')` }}>
           <h2 className="text-2xl md:text-3xl font-bold mb-8">Rent your car in 3 easy steps</h2>
@@ -281,7 +283,6 @@ export default function Home({ user }) {
         </div>
       </section>
 
-      {/* 6. POPUP MODAL ARCHITECTURE FOR DATEPICKER SYSTEM */}
       {selectedCar && (
         <div className="fixed inset-0 bg-neutral-950/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-[fadeIn_0.2s_ease-out]">
           <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full border border-gray-100 transform scale-100 animate-[slideUp_0.3s_ease-out]">

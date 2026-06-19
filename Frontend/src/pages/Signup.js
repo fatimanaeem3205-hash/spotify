@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export default function Signup({ setUser }) {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
@@ -35,7 +36,21 @@ export default function Signup({ setUser }) {
           </div>
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Password</label>
-            <input type="password" required className="w-full border border-gray-300 rounded p-3 text-sm focus:outline-none" onChange={e => setForm({...form, password: e.target.value})} />
+            <div className="relative flex items-center">
+              <input 
+                type={showPassword ? 'text' : 'password'}
+                required 
+                className="w-full border border-gray-300 rounded p-3 pr-16 text-sm focus:outline-none" 
+                onChange={e => setForm({...form, password: e.target.value})} 
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 text-xs font-extrabold uppercase tracking-wider text-gray-400 hover:text-neutral-900 select-none transition"
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </button>
+            </div>
           </div>
           <button type="submit" className="w-full bg-neutral-900 text-white font-bold py-3 px-4 rounded text-sm uppercase tracking-wider hover:bg-neutral-800 transition">SignUp</button>
         </form>

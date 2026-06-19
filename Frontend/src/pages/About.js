@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import imgabout from '../assets/bgabout.jpg'
 
 export default function About() {
-  // Automatically snap window posture to the absolute top coordinates upon component layout mounting
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -25,7 +24,6 @@ export default function About() {
   return (
     <div className="bg-white text-neutral-900 overflow-x-hidden antialiased font-sans">
       
-      {/* 1. TOP INTRO SECTION */}
       <section className="pt-20 pb-12 max-w-4xl mx-auto px-6 text-center">
         <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-6 tracking-tight">
           Who we are
@@ -35,7 +33,6 @@ export default function About() {
         </p>
       </section>
 
-      {/* 2. STATS OVERVIEW MATRIX */}
       <section className="py-6 max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 border-t border-b border-gray-100 py-12">
           {stats.map((stat, idx) => (
@@ -47,7 +44,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* 3. HERO SHOWROOM BANNER */}
       <section className="py-8 w-full mx-0 px-0">
         <div className="w-full h-[350px] md:h-[500px] overflow-hidden shadow-sm">
           <img 
@@ -58,10 +54,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* 4. CONTENT & IMAGE SPLIT MOSAIC SYSTEM */}
       <section className="py-16 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
         
-        {/* Left Side: Text Foundations */}
         <div className="lg:col-span-6 space-y-12">
           <div className="space-y-4">
             <h2 className="text-2xl font-bold text-neutral-900 tracking-tight">Our mission</h2>
@@ -83,7 +77,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Right Side: Masonry Graphic Montage */}
         <div className="lg:col-span-6 grid grid-cols-12 gap-4">
           <div className="col-span-5 space-y-4">
             <img 

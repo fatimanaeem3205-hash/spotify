@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function CarsGallery({ user }) {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-      }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
       
   const [cars, setCars] = useState([]);
   const [selectedCar, setSelectedCar] = useState(null);
   const [bookingForm, setBookingForm] = useState({ startDate: '', endDate: '' });
+  const [activeCategory, setActiveCategory] = useState('all');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,15 +57,40 @@ export default function CarsGallery({ user }) {
     }
   };
 
+  const filteredCars = activeCategory === 'all' 
+    ? cars 
+    : cars.filter(car => car.category?.lowercase === activeCategory || car.category === activeCategory);
+
   return (
     <div className="max-w-7xl mx-auto py-12 px-6">
-      <h1 className="text-4xl font-black mb-8 text-neutral-900 uppercase tracking-tight">Our Rental Collection</h1>
+      <h1 className="text-4xl font-black mb-4 text-neutral-900 uppercase tracking-tight">Our Rental Collection</h1>
+      
+      <div className="flex flex-wrap gap-2 mb-8 border-b pb-4">
+        {['all', 'business', 'family', 'adventure', 'wedding'].map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`px-4 py-2 rounded text-xs font-bold uppercase tracking-wider transition ${
+              activeCategory === cat
+                ? 'bg-neutral-900 text-white'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {cars.map(car => (
+        {filteredCars.map(car => (
           <div key={car._id} className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
             <div className="h-52 bg-gray-100 flex items-center justify-center relative p-4">
               <img src={`http://localhost:5000${car.image}`} alt="" className="max-h-full object-contain" />
+              
+              <span className="absolute top-4 left-4 px-2 py-1 bg-neutral-800/80 backdrop-blur-xs text-[10px] text-white font-extrabold uppercase tracking-widest rounded">
+                {car.category || 'Standard'}
+              </span>
+
               <span className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${car.status === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                 {car.status}
               </span>
@@ -76,6 +102,9 @@ export default function CarsGallery({ user }) {
                 <div className="text-sm text-gray-500 space-y-1 mb-4">
                   <p>🎨 Color: {car.color}</p>
                   <p>🔢 Plate: {car.numberPlate}</p>
+                  <p className="text-neutral-900 font-bold text-base mt-2">
+                    Rs. {car.pricePerHour?.toLocaleString() || '0'} <span className="text-xs font-normal text-gray-500">/ hour</span>
+                  </p>
                 </div>
               </div>
               <button 
@@ -90,7 +119,6 @@ export default function CarsGallery({ user }) {
         ))}
       </div>
 
-      {/* TAILWIND STYLED DATEPICKER MODAL */}
       {selectedCar && (
         <div className="fixed inset-0 bg-neutral-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full border border-gray-100">

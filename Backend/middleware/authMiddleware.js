@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 const verifyToken = (req, res, next) => {
   const token = req.headers['authorization']?.split(' ')[1];
@@ -14,11 +15,16 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-const verifyAdmin = (req, res, next) => {
-  if (req.user && req.user.role === 'admin') {
-    next();
-  } else {
-    return res.status(403).json({ message: 'Access denied. Administrator privileges required.' });
+const verifyAdmin = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (user && user.role === 'admin') {
+      next();
+    } else {
+      return res.status(403).json({ message: 'Access denied. Administrator privileges required.' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server privilege checking error.' });
   }
 };
 
