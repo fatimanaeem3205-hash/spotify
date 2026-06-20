@@ -36,6 +36,23 @@ export default function CarsGallery({ user }) {
 
   const executeBooking = async (e) => {
     e.preventDefault();
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const start = new Date(bookingForm.startDate);
+    const end = new Date(bookingForm.endDate);
+
+    if (start < today) {
+      alert("Date validation!");
+      return;
+    }
+
+    if (end <= start) {
+      alert("Select a date after start date!");
+      return;
+    }
+
     try {
       const token = localStorage.getItem('token');
       
@@ -51,6 +68,7 @@ export default function CarsGallery({ user }) {
 
       alert('Booking Successfully Appointed');
       setSelectedCar(null);
+      setBookingForm({ startDate: '', endDate: '' }); // Reset form state matrix
       fetchCars();
     } catch (err) {
       alert(err.response?.data?.message || 'Error executing rental reservation transaction');
@@ -60,6 +78,9 @@ export default function CarsGallery({ user }) {
   const filteredCars = activeCategory === 'all' 
     ? cars 
     : cars.filter(car => car.category?.lowercase === activeCategory || car.category === activeCategory);
+
+  // Get today's date formatted as YYYY-MM-DD for the HTML min attribute fallback
+  const todayString = new Date().toISOString().split('T')[0];
 
   return (
     <div className="max-w-7xl mx-auto py-12 px-6">
@@ -128,7 +149,9 @@ export default function CarsGallery({ user }) {
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Lease Start Date</label>
                 <input 
-                  type="date" required 
+                  type="date" 
+                  required 
+                  min={todayString}
                   className="w-full border border-gray-300 rounded p-3 text-sm focus:ring-2 focus:ring-yellow-400 focus:outline-none"
                   onChange={e => setBookingForm({...bookingForm, startDate: e.target.value})}
                 />
@@ -136,7 +159,9 @@ export default function CarsGallery({ user }) {
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Lease Terminus Date</label>
                 <input 
-                  type="date" required 
+                  type="date" 
+                  required 
+                  min={bookingForm.startDate || todayString}
                   className="w-full border border-gray-300 rounded p-3 text-sm focus:ring-2 focus:ring-yellow-400 focus:outline-none"
                   onChange={e => setBookingForm({...bookingForm, endDate: e.target.value})}
                 />
